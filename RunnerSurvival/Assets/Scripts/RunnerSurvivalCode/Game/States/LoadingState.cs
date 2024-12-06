@@ -16,7 +16,7 @@ namespace RunnerSurvivalCode.Game.States {
         [Inject] private IStateMachine _stateMachine;
         [Inject] private IStatesContainer _statesContainer;
         [Inject] private LoadingStateView _loadingStateView;
-        [Inject] private JsonDataManager _jsonDataManager;
+        [Inject] private IDataManager _jsonDataManager;
         [Inject] private UserDataContainer _userDataContainer;
 
         private float _startTime;
@@ -54,12 +54,12 @@ namespace RunnerSurvivalCode.Game.States {
 
         private void LoadingData() {
             _loadingStateView.LoadingText.text = "Loading data...";
-            UserDataContainer data = _jsonDataManager.LoadFromJson<UserDataContainer>(ProjectConsts.SavesPath);
+            UserDataContainer data = _jsonDataManager.Load<UserDataContainer>(ProjectConsts.SavesPath);
 
             if (data == null) {
                 Debug.Log("Data is null (probably first launch)");
                 data = new UserDataContainer();
-                _jsonDataManager.SaveToJson(ProjectConsts.SavesPath, data);
+                _jsonDataManager.Save(ProjectConsts.SavesPath, data);
             }
 
             _userDataContainer.CopyFrom(data);

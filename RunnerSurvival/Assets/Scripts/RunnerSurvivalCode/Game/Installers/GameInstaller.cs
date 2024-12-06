@@ -33,7 +33,7 @@ namespace RunnerSurvivalCode.Game.Installers {
         }
 
         private void InstallServices() {
-            Container.Bind<JsonDataManager>().AsSingle();
+            Container.Bind<IDataManager>().To<JsonDataManager>().AsSingle();
             
             Container.Bind<IStateMachine>().To<StateMachine>().AsSingle();
             

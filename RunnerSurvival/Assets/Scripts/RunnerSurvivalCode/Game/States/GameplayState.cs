@@ -11,9 +11,12 @@ namespace RunnerSurvivalCode.Game.States {
         [Inject] private UserDataContainer _userDataContainer;
         [Inject] private IStateMachine _stateMachine;
         [Inject] private IStatesContainer _statesContainer;
-        [Inject] private JsonDataManager _jsonDataManager;
+        [Inject] private IDataManager _jsonDataManager;
 
         private readonly DiContainer _container;
+        private readonly int[] _seeds = {
+            1, 2, 3, 4, 5
+        };
 
         private GameplayManager _gameplayManager;
         private int _seed;
@@ -24,6 +27,7 @@ namespace RunnerSurvivalCode.Game.States {
 
         public void Enter() {
             CreateGameplayManager();
+            _seed = _seeds[UnityEngine.Random.Range(0, _seeds.Length)];
         }
 
         public void Exit() {
@@ -35,7 +39,7 @@ namespace RunnerSurvivalCode.Game.States {
 
         private void OnLose() {
             _userDataContainer.AddGameInfo(_gameplayManager.Score, _seed);
-            _jsonDataManager.SaveToJson(ProjectConsts.SavesPath, _userDataContainer);
+            _jsonDataManager.Save(ProjectConsts.SavesPath, _userDataContainer);
             _stateMachine.ChangeState(_statesContainer.States.Find(s => s.GetType() == typeof(LobbyState)));
         }
 

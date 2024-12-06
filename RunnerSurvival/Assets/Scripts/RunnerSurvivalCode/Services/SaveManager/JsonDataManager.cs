@@ -3,12 +3,20 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 namespace RunnerSurvivalCode.Services.SaveManager {
-    public class JsonDataManager {
+    public class JsonDataManager : IDataManager{
         public Action<string> OnDataSaveSuccess;
         public Action<string> OnDataSaveFail;
     
         public Action<string> OnDataLoadSuccess;
         public Action<string> OnDataLoadFail;
+        
+        public void Save<T>(string key, T data) {
+            SaveToJson(key, data);
+        }
+        
+        public T Load<T>(string key) {
+            return LoadFromJson<T>(key);
+        }
 
         public void SaveToJson<T>(string fileName, T data) {
             try {
