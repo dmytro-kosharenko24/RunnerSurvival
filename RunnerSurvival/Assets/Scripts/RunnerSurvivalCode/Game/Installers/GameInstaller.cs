@@ -1,10 +1,10 @@
 using RunnerSurvivalCode.Bootstraps;
 using RunnerSurvivalCode.Game.Data;
 using RunnerSurvivalCode.Game.States.Views;
-using RunnerSurvivalCode.Services.AddressablesManager;
+using RunnerSurvivalCode.Services.SaveManager;
 using RunnerSurvivalCode.Services.StateMachine;
+using RunnerSurvivalCode.Services.StateMachine.Contracts;
 using RunnerSurvivalCode.Services.Ticker;
-using Services.AssetManager;
 using Zenject;
 
 namespace RunnerSurvivalCode.Game.Installers {
@@ -34,8 +34,6 @@ namespace RunnerSurvivalCode.Game.Installers {
 
         private void InstallServices() {
             Container.Bind<JsonDataManager>().AsSingle();
-            
-            Container.Bind<IAssetManager>().To<AddressablesAssetManager>().AsSingle();
             
             Container.Bind<IStateMachine>().To<StateMachine>().AsSingle();
             

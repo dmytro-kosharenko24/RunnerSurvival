@@ -17,9 +17,9 @@ namespace RunnerSurvivalCode.Game.Core.Common {
         private readonly GameplayStateView _view;
         private readonly Action _loseAction;
         private readonly Random _random;
-        
+
         public int PlayerPositionIndex;
-        
+
         public Action SwipeRightAction;
         public Action SwipeLeftAction;
         public Action OnGameStart;
@@ -30,13 +30,13 @@ namespace RunnerSurvivalCode.Game.Core.Common {
 
         public bool IsStart { get; private set; }
         public int Score { get; private set; }
-        
+
         public GameplayManager(DiContainer container, GameplayStateView view, int seed, Action loseAction) : base(container) {
             _view = view;
             _loseAction = loseAction;
-            
+
             _random = new Random(seed);
-            
+
             container.Inject(this);
         }
 
@@ -49,49 +49,49 @@ namespace RunnerSurvivalCode.Game.Core.Common {
             AddModule<FruitController>(this, _random);
             AddModule<ScoreModule>(this);
             AddModule<LoseModule>(this);
-            
+
             _view.Screen.gameObject.SetActive(true);
         }
-        
+
         public override void Dispose() {
             DisposeModules();
             _view.Screen.gameObject.SetActive(false);
         }
-        
+
         public void SwipeRight() {
             SwipeRightAction?.Invoke();
         }
-        
+
         public void SwipeLeft() {
             SwipeLeftAction?.Invoke();
         }
-        
+
         public void StartGame() {
             IsStart = true;
             OnGameStart?.Invoke();
         }
-        
+
         public void HalfDistancePassed() {
             OnHalfDistancePassed?.Invoke();
         }
-        
+
         public void FullDistancePassed() {
             OnFullDistancePassed?.Invoke();
         }
-        
+
         public void Lose() {
             IsStart = false;
             OnLose?.Invoke();
         }
-        
+
         public void CollectFruit(FruitType type) {
             OnFruitCollected?.Invoke(type);
         }
-        
+
         public void AddScore(int points) {
             Score += points;
         }
-        
+
         public void GoToLobby() {
             _loseAction?.Invoke();
         }

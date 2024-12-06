@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RunnerSurvivalCode.Game.States;
+using RunnerSurvivalCode.Services.StateMachine.Contracts;
 using Zenject;
 
 namespace RunnerSurvivalCode.Services.StateMachine {

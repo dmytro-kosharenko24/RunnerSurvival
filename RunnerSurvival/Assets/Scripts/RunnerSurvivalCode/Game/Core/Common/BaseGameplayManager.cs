@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using RunnerSurvivalCode.Game.States;
 using UnityEngine;
 using Zenject;
 
 namespace RunnerSurvivalCode.Game.Core.Common {
 
     public abstract class BaseGameplayManager {
-        protected readonly List<Module> _levelModules;
-        
+        private readonly List<Module> _levelModules;
+
         private DiContainer _container;
 
         protected BaseGameplayManager(DiContainer container) {

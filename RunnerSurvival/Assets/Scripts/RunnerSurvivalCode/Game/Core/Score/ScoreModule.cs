@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using RunnerSurvivalCode.Game.Core.Common;
 using RunnerSurvivalCode.Game.Core.Fruits;
-using RunnerSurvivalCode.Game.States;
 using RunnerSurvivalCode.Game.States.Views;
 using Zenject;
 
 namespace RunnerSurvivalCode.Game.Core.Score {
     public class ScoreModule : Module {
         [Inject] private GameplayStateView _gameplayStateView;
-        
+
         private readonly GameplayManager _gameplayManager;
 
         private readonly Dictionary<FruitType, int> _fruitToPointsMap = new Dictionary<FruitType, int>() {
@@ -39,7 +38,7 @@ namespace RunnerSurvivalCode.Game.Core.Score {
                 AddScore(points);
             }
         }
-        
+
         private void AddScore(int points) {
             _gameplayManager.AddScore(points);
             _gameplayStateView.AllScoreText.text = _gameplayManager.Score.ToString();

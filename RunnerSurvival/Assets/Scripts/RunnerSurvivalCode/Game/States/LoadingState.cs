@@ -1,8 +1,8 @@
 using DG.Tweening;
 using RunnerSurvivalCode.Game.Data;
 using RunnerSurvivalCode.Game.States.Views;
-using RunnerSurvivalCode.Services.AddressablesManager;
-using RunnerSurvivalCode.Services.StateMachine;
+using RunnerSurvivalCode.Services.SaveManager;
+using RunnerSurvivalCode.Services.StateMachine.Contracts;
 using UnityEngine;
 using Zenject;
 
@@ -16,7 +16,6 @@ namespace RunnerSurvivalCode.Game.States {
         [Inject] private IStateMachine _stateMachine;
         [Inject] private IStatesContainer _statesContainer;
         [Inject] private LoadingStateView _loadingStateView;
-        [Inject] private IAssetManager _assetManager;
         [Inject] private JsonDataManager _jsonDataManager;
         [Inject] private UserDataContainer _userDataContainer;
 
@@ -45,35 +44,12 @@ namespace RunnerSurvivalCode.Game.States {
         private void DoNextStep() {
             switch (_currentStep) {
             case 0:
-                LoadingResources();
-                break;
-            case 1:
                 LoadingData();
                 break;
-            case 2:
+            case 1:
                 AdditionalLoading();
                 break;
             }
-        }
-
-        private void LoadingResources() {
-            _assetManager.OnAssetsLoadSuccess += OnAssetsLoadSuccess;
-            _assetManager.OnAssetsLoadFail += OnAssetsLoadFail;
-            _loadingStateView.LoadingText.text = "Loading resources...";
-            _assetManager.LoadAllAssets();
-        }
-
-        private void OnAssetsLoadSuccess() {
-            _assetManager.OnAssetsLoadSuccess -= OnAssetsLoadSuccess;
-            _assetManager.OnAssetsLoadFail -= OnAssetsLoadFail;
-            _currentStep++;
-            AddProgressByTween(StandardLoadingCoefficient * _currentStep);
-        }
-
-        private void OnAssetsLoadFail() {
-            _assetManager.OnAssetsLoadSuccess -= OnAssetsLoadSuccess;
-            _assetManager.OnAssetsLoadFail -= OnAssetsLoadFail;
-            _loadingStateView.LoadingText.text = "Loading failed...";
         }
 
         private void LoadingData() {
@@ -97,8 +73,7 @@ namespace RunnerSurvivalCode.Game.States {
             if (loadingTime < MinimalLoadingTime) {
                 _loadingStateView.LoadingProgressBarSlider.DOValue(1f, MinimalLoadingTime - loadingTime)
                     .OnComplete(OnExit).SetId(this);
-            }
-            else {
+            } else {
                 _loadingStateView.LoadingProgressBarSlider.DOValue(1f, TweenTime)
                     .OnComplete(OnExit).SetId(this);
             }

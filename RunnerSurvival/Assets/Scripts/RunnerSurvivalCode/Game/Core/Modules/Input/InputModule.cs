@@ -1,5 +1,4 @@
 using RunnerSurvivalCode.Game.Core.Common;
-using RunnerSurvivalCode.Game.States;
 using RunnerSurvivalCode.Services.Ticker;
 using UnityEngine;
 using Zenject;
@@ -8,17 +7,17 @@ namespace RunnerSurvivalCode.Game.Core.Modules.Input {
     public class InputModule : Module {
         private readonly GameplayManager _gameplayManager;
         private const float MinSwipeDistance = 50f;
-        
+
         [Inject] private UnityTicker _unityTicker;
 
         private Vector2 _startTouchPosition;
         private Vector2 _currentTouchPosition;
         private bool _isSwiping;
-        
+
         public InputModule(GameplayManager gameplayManager) {
             _gameplayManager = gameplayManager;
         }
-        
+
         public override void Initialize() {
             _unityTicker.Tick += Update;
         }
@@ -31,7 +30,7 @@ namespace RunnerSurvivalCode.Game.Core.Modules.Input {
             if (!_gameplayManager.IsStart) {
                 return;
             }
-            
+
             HandleSwipeInput();
         }
 

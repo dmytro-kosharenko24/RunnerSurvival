@@ -1,7 +1,8 @@
 using RunnerSurvivalCode.Game.Core.Common;
 using RunnerSurvivalCode.Game.Data;
 using RunnerSurvivalCode.Game.States.Views;
-using RunnerSurvivalCode.Services.StateMachine;
+using RunnerSurvivalCode.Services.SaveManager;
+using RunnerSurvivalCode.Services.StateMachine.Contracts;
 using Zenject;
 
 namespace RunnerSurvivalCode.Game.States {

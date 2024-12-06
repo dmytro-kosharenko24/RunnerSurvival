@@ -1,7 +1,6 @@
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Slider = UnityEngine.UI.Slider;
 
 namespace RunnerSurvivalCode.Game.States.Views {

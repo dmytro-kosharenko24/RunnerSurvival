@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using RunnerSurvivalCode.Game.Core.Common;
-using RunnerSurvivalCode.Game.States;
 using RunnerSurvivalCode.Game.States.Views;
 using RunnerSurvivalCode.Services.Ticker;
 using UnityEngine;
@@ -23,11 +22,9 @@ namespace RunnerSurvivalCode.Game.Core.Fruits {
         private readonly Dictionary<FruitType, int> _collectedFruits = new Dictionary<FruitType, int>() {
             {
                 FruitType.Apple, 0
-            },
-            {
+            }, {
                 FruitType.Corn, 0
-            },
-            {
+            }, {
                 FruitType.Banana, 0
             }
         };
@@ -48,7 +45,7 @@ namespace RunnerSurvivalCode.Game.Core.Fruits {
 
             _gameplayManager.SwipeLeftAction += CheckFruits;
             _gameplayManager.SwipeRightAction += CheckFruits;
-            
+
             _gameplayStateView.AppleScoreText.text = "0";
             _gameplayStateView.BananaScoreText.text = "0";
             _gameplayStateView.CornScoreText.text = "0";
@@ -57,10 +54,10 @@ namespace RunnerSurvivalCode.Game.Core.Fruits {
         public override void Dispose() {
             _gameplayManager.OnHalfDistancePassed -= SpawnFruit;
             _unityTicker.Tick -= OnTick;
-            
+
             _gameplayManager.SwipeLeftAction -= CheckFruits;
             _gameplayManager.SwipeRightAction -= CheckFruits;
-            
+
             _gameplayStateView.ApplePoolFactory.ReleaseAllInstances();
             _gameplayStateView.BananaPoolFactory.ReleaseAllInstances();
             _gameplayStateView.CornPoolFactory.ReleaseAllInstances();
@@ -136,7 +133,7 @@ namespace RunnerSurvivalCode.Game.Core.Fruits {
             _liveFruits.Remove(data);
             ReturnFruitToPool(data);
             _collectedFruits[data.Type]++;
-            
+
             switch (data.Type) {
             case FruitType.Apple:
                 _gameplayStateView.AppleScoreText.text = _collectedFruits[FruitType.Apple].ToString();

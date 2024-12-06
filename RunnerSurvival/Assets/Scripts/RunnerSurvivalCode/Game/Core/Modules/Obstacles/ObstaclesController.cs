@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using RunnerSurvivalCode.Game.Core.Common;
-using RunnerSurvivalCode.Game.States;
 using RunnerSurvivalCode.Game.States.Views;
 using RunnerSurvivalCode.Services.Ticker;
 using UnityEngine;
@@ -11,7 +10,7 @@ using CharacterController = RunnerSurvivalCode.Game.Core.Modules.Character.Chara
 namespace RunnerSurvivalCode.Game.Core.Modules.Obstacles {
     public class ObstaclesController : Module {
         private const float CollisionDistance = 0.3f;
-        
+
         private readonly GameplayManager _gameplayManager;
         private readonly System.Random _random;
 
@@ -33,7 +32,7 @@ namespace RunnerSurvivalCode.Game.Core.Modules.Obstacles {
         public override void Initialize() {
             _unityTicker.Tick += Update;
             _gameplayManager.OnFullDistancePassed += SpawnPattern;
-            
+
             _gameplayManager.SwipeLeftAction += CheckObstacles;
             _gameplayManager.SwipeRightAction += CheckObstacles;
         }
@@ -41,7 +40,7 @@ namespace RunnerSurvivalCode.Game.Core.Modules.Obstacles {
         public override void Dispose() {
             _unityTicker.Tick -= Update;
             _gameplayManager.OnFullDistancePassed -= SpawnPattern;
-            
+
             _gameplayManager.SwipeLeftAction -= CheckObstacles;
             _gameplayManager.SwipeRightAction -= CheckObstacles;
             _gameplayStateView.ObstaclePoolFactory.ReleaseAllInstances();
@@ -52,9 +51,9 @@ namespace RunnerSurvivalCode.Game.Core.Modules.Obstacles {
                 return;
             }
 
-            CheckObstacles(); 
+            CheckObstacles();
         }
-        
+
         private void SpawnPattern() {
             string selectedPattern = _patterns[_random.Next(0, _patterns.Length)];
 
@@ -64,12 +63,12 @@ namespace RunnerSurvivalCode.Game.Core.Modules.Obstacles {
 
                     obstacle.position = new Vector3(CharacterController.LinePositions[i], 0f, GameplayManager.SpawnZPosition);
                     obstacle.gameObject.SetActive(true);
-                    
+
                     var data = new ObstacleData {
                         LineIndex = i,
                         Transform = obstacle
                     };
-                    
+
                     _liveObstacles.Add(data);
                 }
             }
@@ -80,13 +79,13 @@ namespace RunnerSurvivalCode.Game.Core.Modules.Obstacles {
                 if (_gameplayManager.PlayerPositionIndex == obstacle.LineIndex) {
                     var playerPosition = _gameplayStateView.Player.position;
                     var obstaclePosition = obstacle.Transform.position;
-                    
+
                     if (Mathf.Abs(playerPosition.z - obstaclePosition.z) < CollisionDistance) {
                         _gameplayManager.Lose();
                         return;
                     }
                 }
-                
+
                 if (obstacle.Transform.position.z < _gameplayStateView.Player.position.z - 5f) {
                     obstacle.Transform.gameObject.SetActive(false);
                     _gameplayStateView.ObstaclePoolFactory.Release(obstacle.Transform);

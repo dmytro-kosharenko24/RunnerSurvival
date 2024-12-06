@@ -1,4 +1,4 @@
-using RunnerSurvivalCode.Services.StateMachine;
+using RunnerSurvivalCode.Services.StateMachine.Contracts;
 using RunnerSurvivalCode.Services.Ticker;
 using UnityEngine;
 using Zenject;

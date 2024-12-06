@@ -1,5 +1,4 @@
 using RunnerSurvivalCode.Game.Core.Common;
-using RunnerSurvivalCode.Game.States;
 using RunnerSurvivalCode.Game.States.Views;
 using RunnerSurvivalCode.Services.Ticker;
 using UnityEngine;
@@ -55,7 +54,7 @@ namespace RunnerSurvivalCode.Game.Core.ObjectsMover {
             if (Mathf.Abs(_lastParentZPosition - _startParentZPosition) >= SpawnDistance / 2) {
                 if (!_isHalfPassed) {
                     _gameplayManager.HalfDistancePassed();
-                    _isHalfPassed = true; 
+                    _isHalfPassed = true;
                 }
             }
 

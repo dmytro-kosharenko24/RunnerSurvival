@@ -1,3 +1,5 @@
+using RunnerSurvivalCode.Services.StateMachine.Contracts;
+
 namespace RunnerSurvivalCode.Services.StateMachine {
     public class StateMachine : IStateMachine {
         private IState _currentState;

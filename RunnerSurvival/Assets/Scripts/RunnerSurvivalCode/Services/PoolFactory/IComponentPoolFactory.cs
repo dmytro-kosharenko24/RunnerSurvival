@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.UI.Pool
+namespace RunnerSurvivalCode.Services.PoolFactory
 {
     public interface IComponentPoolFactory
     {

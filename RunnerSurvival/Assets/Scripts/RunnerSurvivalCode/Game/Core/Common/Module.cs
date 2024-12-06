@@ -1,6 +1,6 @@
 using System;
 
-namespace RunnerSurvivalCode.Game.States {
+namespace RunnerSurvivalCode.Game.Core.Common {
     public abstract class Module : IDisposable {
         public abstract void Initialize();
 
