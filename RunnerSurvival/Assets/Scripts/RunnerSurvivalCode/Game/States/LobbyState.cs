@@ -10,17 +10,21 @@ namespace RunnerSurvivalCode.Game.States {
 
         [Inject] private UserDataContainer _userDataContainer;
         [Inject] private LobbyStateView _lobbyStateView;
+        [Inject] private IStateMachine _stateMachine;
+        [Inject] private IStatesContainer _statesContainer;
         
         public void Enter() {
             _lobbyStateView.Screen.gameObject.SetActive(true);
             CreateScrollViewItems();
+            BindEvents();
         }
 
         public void Exit() {
             _lobbyStateView.Screen.gameObject.SetActive(false);
             _lobbyStateView.ScrollViewItemPoolFactory.ReleaseAllInstances();
+            UnbindEvents();
         }
-        
+
         public void Update() {
         }
         
@@ -32,6 +36,18 @@ namespace RunnerSurvivalCode.Game.States {
                 view.GameScoreText.text = _userDataContainer.GamesInfo[i].Score.ToString();
                 view.GameIndexText.text = (i+1).ToString();
             }
+        }
+        
+        private void BindEvents() {
+            _lobbyStateView.PlayButton.onClick.AddListener(OnPlayButtonClicked);
+        }
+
+        private void UnbindEvents() {
+            _lobbyStateView.PlayButton.onClick.RemoveListener(OnPlayButtonClicked);
+        }
+        
+        private void OnPlayButtonClicked() {
+            _stateMachine.ChangeState(_statesContainer.States.Find(s => s.GetType() == typeof(GameplayState)));
         }
     }
 }

@@ -3,6 +3,7 @@ using RunnerSurvivalCode.Game.Data;
 using RunnerSurvivalCode.Game.States.Views;
 using RunnerSurvivalCode.Services.AddressablesManager;
 using RunnerSurvivalCode.Services.StateMachine;
+using RunnerSurvivalCode.Services.Ticker;
 using Services.AssetManager;
 using Zenject;
 
@@ -23,6 +24,8 @@ namespace RunnerSurvivalCode.Game.Installers {
         
         private void InstallViews() {
             Container.Bind<LoadingStateView>().FromInstance(MainStatesView.LoadingStateView).AsSingle();
+            Container.Bind<LobbyStateView>().FromInstance(MainStatesView.LobbyStateView).AsSingle();
+            Container.Bind<GameplayStateView>().FromInstance(MainStatesView.GameplayStateView).AsSingle();
         }
 
         private void InstallData() {
@@ -39,6 +42,8 @@ namespace RunnerSurvivalCode.Game.Installers {
             var gameStatesContainer = new GameStatesContainer();
             Container.Bind<IStatesContainer>().FromInstance(gameStatesContainer).AsSingle();
             gameStatesContainer.CreateStates(Container);
+
+            Container.Bind<UnityTicker>().AsSingle();
         }
     }
 }

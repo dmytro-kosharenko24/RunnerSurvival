@@ -25,6 +25,7 @@ namespace RunnerSurvivalCode.Game.States {
 
         public void Enter() {
             _startTime = Time.time;
+            _loadingStateView.Screen.gameObject.SetActive(true);
             _loadingStateView.LoadingProgressBarSlider.value = 0;
             DoNextStep();
         }
@@ -85,7 +86,7 @@ namespace RunnerSurvivalCode.Game.States {
                 _jsonDataManager.SaveToJson(ProjectConsts.SavesPath, data);
             }
 
-            _userDataContainer = data;
+            _userDataContainer.CopyFrom(data);
             _currentStep++;
             AddProgressByTween(StandardLoadingCoefficient * _currentStep);
         }

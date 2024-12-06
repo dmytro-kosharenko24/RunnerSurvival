@@ -14,6 +14,11 @@ namespace RunnerSurvivalCode.Game.Data {
             if (index < 0) index = ~index;
             GamesInfo.Insert(index, newSession);
         }
+        
+        public void CopyFrom(UserDataContainer container) {
+            GamesInfo.Clear();
+            GamesInfo.AddRange(container.GamesInfo);
+        }
 
     }
 
